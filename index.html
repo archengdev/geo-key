@@ -1,4 +1,6 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
+<link rel="stylesheet" href="https://generativeart.online/css/drawing-app.css">
 <script>
     /* global nn */
 
@@ -10,37 +12,72 @@
                      left: nn.width/2-351,
                      top: nn.height/10-51,
                      fontFamily: "Courier New, monospace",
+                     fontWeight: "bold",
                      fontSize: 90})
                 .addTo('body')
+    
     let button = nn.create('div')
                   .css({position: 'absolute',
-                       left: nn.width/2,
-                       top: nn.height/10 +300,
+                       left:  50,
+                       top: nn.height/10 + 100,
                        backgroundColor: 'gray',
-                       height: 40,
-                       width: 40})
+                       height: 50,
+                       borderRadius: '15px',
+                       width: 140})
+                  .addTo('body')
+    
+    let btext = nn.create('div')
+                  .content("Guess")
+                  .css({position: 'absolute',
+                       left:  50,
+                       top: nn.height/10 + 106,
+                       fontFamily: "Courier New, monospace",
+                       fontSize:30,
+                       height: 45,
+                       textAlign: 'center',
+                       verticalAlign: 'middle',
+                       borderRadius: '15px',
+                       width: 140})
                   .addTo('body')
                   .on('click', guess)
-
   }
   
+  let height = 0
   
   function guess() {
-     let div = nn.create('div')
-    .css({position: 'absolute',
-             left: 20,
-             top: nn.height/2,
-         color: 'red',
-         fontFamily: "Courier New, monospace",
-        // borderRadius: "15px",
-        //  backgroundColor: 'red'
-         })
     
-    for (let i = 0; i < 20; i++) {
-  div.appendChild(nn.create('span').content('b \n'))
-}
-    document.body.appendChild(div)
+    let div = nn.create('div')
+               .css({position: 'absolute',
+                     left: 60,
+                     top: nn.height/10 + 180 + height++ * 20,
+                     color: 'red',
+                     fontFamily: "Courier New, monospace"})
+    
+    
+    div.appendChild(nn.create('span').content(moment().format('MMMM Do YYYY, h:mm:ss a')))
+    // document.body.appendChild(div)
+    
+    nn.askForGPS((data) => {
+      div.appendChild(nn.create('span').content(`\n${data.lat}, ${data.lng}`))
+      document.body.appendChild(div)
+    })
+    // const date = moment().format('MMMM Do YYYY, h:mm:ss a')
+    // div.appendChild(nn.create('span').content(date))
+    // for (let i = 0; i < 1; i++) {
+    // div.appendChild(nn.create('span').content(moment().format('MMMM Do YYYY, h:mm:ss a')))
+    // document.body.appendChild(div)
+    // }
+    
   }
+  
+  function generateRandomTime() {
+    const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
+    const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+    const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+    
+    return `${hours}:${minutes}:${seconds}`;
+}
+  
   
   nn.on('load', setup)
   
