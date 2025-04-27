@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="https://generativeart.online/css/drawing-app.css">
 <script>
     /* global nn */
-
   function setup() {
     nn.get('body').css({backgroundColor:'lightgray'})
     let text = nn.create('div')
@@ -43,39 +42,45 @@
   }
   
   let height = 0
+  const colors = ["red", "green"];
   
   function guess() {
     
     let div = nn.create('div')
                .css({position: 'absolute',
                      left: 60,
-                     top: nn.height/10 + 180 + height++ * 20,
+                     top: nn.height/10 + 160 + height++ * 20,
                      color: 'red',
                      fontFamily: "Courier New, monospace"})
     
     
-    div.appendChild(nn.create('span').content(moment().format('MMMM Do YYYY, h:mm:ss a')))
-    // document.body.appendChild(div)
+    div.appendChild(nn.create('span').content(moment().format('MMMM DD YYYY, h:mm:ss a')))
+    div.appendChild(nn.create('span').content(generateRandomTime()))
+    // nn.askForGPS((data) => {
+    //   div.appendChild(nn.create('span').content(`\n${data.lat}, ${data.lng}`))
+    // })
+    document.body.appendChild(div)
+
     
-    nn.askForGPS((data) => {
-      div.appendChild(nn.create('span').content(`\n${data.lat}, ${data.lng}`))
-      document.body.appendChild(div)
-    })
-    // const date = moment().format('MMMM Do YYYY, h:mm:ss a')
-    // div.appendChild(nn.create('span').content(date))
-    // for (let i = 0; i < 1; i++) {
-    // div.appendChild(nn.create('span').content(moment().format('MMMM Do YYYY, h:mm:ss a')))
-    // document.body.appendChild(div)
+    
+    // for (let i = 0; i < 20; i++) {
+    //   div.appendChild(nn.create('span').content('a').css({color:nn.random(colors)}))
     // }
+    // document.body.appendChild(div)
     
   }
   
-  function generateRandomTime() {
-    const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
-    const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
-    const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+//   function generateRandomTime() {
+//     const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
+//     const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+//     const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
     
-    return `${hours}:${minutes}:${seconds}`;
+//     return `${hours}:${minutes}:${seconds}`;
+// }
+  
+  function generateRandomTime() {
+  const randomDate = moment.unix(Math.floor(Math.random() * 6311433600 - 2208988800))
+  return randomDate.format('MMMM DD YYYY, h:mm:ss a')
 }
   
   
