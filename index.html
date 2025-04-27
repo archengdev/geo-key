@@ -1,8 +1,55 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <script>
+    /* global nn */
 
-nn.askForGPS((data) => {
-  document.body.innerText = `We've got data! ${data.lat}, ${data.lng}`
-})
+  function setup() {
+    nn.get('body').css({backgroundColor:'lightgray'})
+    let text = nn.create('div')
+                .content("Geospatialdle")
+                .css({position: 'absolute',
+                     left: nn.width/2-351,
+                     top: nn.height/10-51,
+                     fontFamily: "Courier New, monospace",
+                     fontSize: 90})
+                .addTo('body')
+    let button = nn.create('div')
+                  .css({position: 'absolute',
+                       left: nn.width/2,
+                       top: nn.height/10 +300,
+                       backgroundColor: 'gray',
+                       height: 40,
+                       width: 40})
+                  .addTo('body')
+                  .on('click', guess)
 
+  }
+  
+  
+  function guess() {
+     let div = nn.create('div')
+    .css({position: 'absolute',
+             left: 20,
+             top: nn.height/2,
+         color: 'red',
+         fontFamily: "Courier New, monospace",
+        // borderRadius: "15px",
+        //  backgroundColor: 'red'
+         })
+    
+    for (let i = 0; i < 20; i++) {
+  div.appendChild(nn.create('span').content('b \n'))
+}
+    document.body.appendChild(div)
+  }
+  
+  nn.on('load', setup)
+  
+  /* global nn */
+// nn.askForGPS((data) => {
+//   document.body.innerText = `We've got data! ${data.lat}, ${data.lng}`
+// })
+  
+  
+  
+  
 </script>
